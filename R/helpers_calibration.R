@@ -544,7 +544,7 @@ fit_best_model <- function(x, dfgrid, cal_res, n_replicates, rep_data, model_typ
   # if n_replicates == 1
   if (n_replicates > 1) {
     rep_i <- rep_data[[rep_x]]
-    data_x <- cal_res$calibration_data[rep_i, ]
+    data_x <- cal_res$calibration_data[-rep_i, ]
   } else {
     data_x <- cal_res$calibration_data
   }
