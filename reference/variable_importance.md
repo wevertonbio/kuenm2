@@ -5,7 +5,8 @@ Variable importance
 ## Usage
 
 ``` r
-variable_importance(models, modelID = NULL, parallel = FALSE, ncores = NULL,
+variable_importance(models, modelID = NULL, by_terms = FALSE,
+                    parallel = FALSE, ncores = NULL,
                     progress_bar = TRUE, verbose = TRUE)
 ```
 
@@ -20,6 +21,12 @@ variable_importance(models, modelID = NULL, parallel = FALSE, ncores = NULL,
 - modelID:
 
   (character). Default = NULL.
+
+- by_terms:
+
+  (logical) whether to calculate importance by model terms (e.g.,
+  `bio1`, `I(bio1^2)`, `hinge(bio1)`) instead of aggregating by
+  variable. Default = FALSE.
 
 - parallel:
 
@@ -44,9 +51,9 @@ variable_importance(models, modelID = NULL, parallel = FALSE, ncores = NULL,
 
 ## Value
 
-A data.frame containing the relative contribution of each variable. An
-identification for distinct models is added if `fitted` contains
-multiple models.
+A data.frame containing the relative contribution of each variable (or
+term if `by_terms = TRUE`). An identification for distinct models is
+added if `fitted` contains multiple models.
 
 ## See also
 
@@ -63,10 +70,10 @@ data(fitted_model_maxnet, package = "kuenm2")
 imp_maxnet <- variable_importance(models = fitted_model_maxnet)
 #> 
 #> Calculating variable contribution for model 1 of 2
-#>   |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+#>   |                                                                              |                                                                      |   0%  |                                                                              |=======================                                               |  33%  |                                                                              |===============================================                       |  67%  |                                                                              |======================================================================| 100%
 #> 
 #> Calculating variable contribution for model 2 of 2
-#>   |                                                                              |                                                                      |   0%  |                                                                              |==========                                                            |  14%  |                                                                              |====================                                                  |  29%  |                                                                              |==============================                                        |  43%  |                                                                              |========================================                              |  57%  |                                                                              |==================================================                    |  71%  |                                                                              |============================================================          |  86%  |                                                                              |======================================================================| 100%
+#>   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%
 
 # Plot
 plot_importance(imp_maxnet)
@@ -80,7 +87,7 @@ data(fitted_model_glm, package = "kuenm2")
 imp_glm <- variable_importance(models = fitted_model_glm)
 #> 
 #> Calculating variable contribution for model 1 of 1
-#>   |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+#>   |                                                                              |                                                                      |   0%  |                                                                              |=======================                                               |  33%  |                                                                              |===============================================                       |  67%  |                                                                              |======================================================================| 100%
 
 # Plot
 plot_importance(imp_glm)
