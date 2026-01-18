@@ -124,7 +124,7 @@ fit_selected <- function(calibration_results,
   m_ids <- calibration_results$selected_models$ID
   algorithm <- calibration_results$algorithm
 
-  # Fitting models over multiple replicates
+  # Fitting models if they have multiple replicates
   if (n_replicates > 1) {
     if (verbose) {
       message("Fitting replicates...")
@@ -224,6 +224,7 @@ fit_selected <- function(calibration_results,
   if (verbose) {
     message("\nFitting full models...")
   }
+
   # Full models grid setup
   n_models <- length(m_ids)
   dfgrid <- expand.grid(models = m_ids, replicates = 1)
@@ -278,6 +279,11 @@ fit_selected <- function(calibration_results,
     }
   }
 
+  # Stop the cluster for full models
+  if (parallel) {
+    parallel::stopCluster(cl)
+  }
+
   # Assign names to full models
   names(full_models) <- paste0("Model_", m_ids)
 
@@ -286,10 +292,6 @@ fit_selected <- function(calibration_results,
     best_models[[i]]$Full_model <- full_models[[i]]
   }
 
-  # Stop the cluster for full models
-  if (parallel) {
-    parallel::stopCluster(cl)
-  }
 
   # Compute thresholds for predictions
   occ <- calibration_results$calibration_data[
@@ -298,7 +300,7 @@ fit_selected <- function(calibration_results,
   # Predictions and consensus for occurrences
   p_occ <- lapply(names(best_models), function(x) {
     m_x <- best_models[[x]]
-    if (any(grepl("Rep", names(m_x)))) {
+    if (n_replicates > 1) {
       m_x$Full_model <- NULL
     }
 
@@ -308,25 +310,50 @@ fit_selected <- function(calibration_results,
                                                        type = type))
     } else if (algorithm == "glm") {
       p_r <- sapply(m_x, function(i) suppressWarnings(
-        as.numeric(predict_glm_mx(model = i,
-                       newdata = occ, type = type))
+        as.numeric(predict_glm_mx(model = i, newdata = occ, type = type))
         ))
     }
 
-    p_mean <- apply(p_r, 1, mean, na.rm = TRUE)
-    p_median <- apply(p_r, 1, median, na.rm = TRUE)
+    if (n_replicates > 1) {
+      p_mean <- apply(p_r, 1, mean, na.rm = TRUE)
+      p_median <- apply(p_r, 1, median, na.rm = TRUE)
 
-    list(mean = p_mean, median = p_median)
+      list(mean = p_mean, median = p_median, rep = p_r)
+    } else {
+      list(Full_model = p_r[, 1])
+    }
   })
 
   names(p_occ) <- names(best_models)
 
   # Calculate consensus across models
-  mean_consensus <- apply(sapply(p_occ, function(x) x$mean), 1,
-                          mean, na.rm = TRUE)
-  median_consensus <- apply(sapply(p_occ, function(x) x$median), 1,
-                            median, na.rm = TRUE)
+  if (length(p_occ) == 1) {
+    if (n_replicates > 1) {
+      mean_consensus <- p_occ[[1]]$mean
+      median_consensus <- p_occ[[1]]$median
+    } else {
+      mean_consensus <- p_occ[[1]]$Full_model
+      median_consensus <- p_occ[[1]]$Full_model
+    }
+
+  } else {
+    if (n_replicates > 1) {
+      mean_consensus <- apply(sapply(p_occ, function(x) x$mean), 1,
+                              mean, na.rm = TRUE)
+      median_consensus <- apply(do.call(cbind, lapply(p_occ, `[[`, "rep")), 1,
+                                median, na.rm = TRUE)
+    } else {
+      mean_consensus <- apply(sapply(p_occ, function(x) x$Full_model), 1,
+                              mean, na.rm = TRUE)
+      median_consensus <- apply(sapply(p_occ, function(x) x$Full_model), 1,
+                                median, na.rm = TRUE)
+    }
+  }
+
+  p_occ <- lapply(p_occ, function(x) x[names(x) != "rep"])
+
   consensus <- list(mean = mean_consensus, median = median_consensus)
+
   p_occ <- c(p_occ, list(consensus = consensus))
 
   # Calculate thresholds
@@ -334,7 +361,8 @@ fit_selected <- function(calibration_results,
     lapply(model, calc_thr,
            thr = calibration_results$summary$omission_rate_thr / 100)
   })
-  #Append type of predictions
+
+  # Append type of predictions
   p_thr$type <- type
 
   #Prepare final data

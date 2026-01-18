@@ -68,9 +68,11 @@ var_models_rep_by_gcm <- function(path) {
     mean_replicates <- terra::rast(lapply(1:n_replicates, function(n) {
       rep_n <- terra::mean(rast(lapply(r_x, function(x) x[[n]])))
     }))
-    var_rep_x <- terra::app(mean_replicates, "var")} else {
-      r_x <- terra::rast(model_files)
-      var_rep_x <- terra::app(r_x, "var")}
+    var_rep_x <- terra::app(mean_replicates, "var")
+  } else {
+    r_x <- terra::rast(model_files)
+    var_rep_x <- terra::app(r_x, "var")
+  }
   names(var_rep_x) <- basename(path)
   return(var_rep_x)
 }
@@ -80,7 +82,8 @@ var_models_model_by_gcm <- function(path, consensus) {
                          full.names = TRUE))
   r_x <- r_x[[sapply(r_x, function(r) names(r) == consensus)]]
   if (terra::nlyr(r_x) > 1) {
-  var_x <- terra::app(r_x, "var") } else {
+    var_x <- terra::app(r_x, "var")
+  } else {
     var_x <- r_x * 0
   }
   return(var_x)
@@ -124,7 +127,7 @@ check_pred_scenarios <- function(projection_data, out_dir) {
   #Present
   if ("Present" %in% sc) {
     #Create folder
-    present_dir <- file.path(out_dir, "Present/")
+    present_dir <- file.path(out_dir, "Present")
     present_sc <- names(projection_data[["Present"]])
     suppressWarnings({
       d_present <- data.frame(
@@ -140,7 +143,7 @@ check_pred_scenarios <- function(projection_data, out_dir) {
   #Past
   if ("Past" %in% sc) {
     #Create folder
-    past_dir <- file.path(out_dir, "Past/")
+    past_dir <- file.path(out_dir, "Past")
     #Get grid of projections
     df_past <- do.call(
       rbind,
@@ -172,7 +175,7 @@ check_pred_scenarios <- function(projection_data, out_dir) {
   ####Project to Future scenarios####
   if ("Future" %in% sc) {
     #Create folder
-    future_dir <- file.path(out_dir, "Future/")
+    future_dir <- file.path(out_dir, "Future")
 
     #Create grid of time-ssp-gcm
     df_future <- do.call(
