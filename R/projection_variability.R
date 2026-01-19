@@ -115,7 +115,7 @@
 #' terra::plot(v$Present$from_parameters)  # From models with distinct parameters
 #' #terra::plot(v$`Future_2041-2060_ssp126`$from_replicates)  # From replicates in future projection
 #' terra::plot(v$`Future_2041-2060_ssp126`$from_parameters)  # From models
-#' terra::plot(v$`Future_2041-2060_ssp585`$from_gcms)  # From GCMs
+#' terra::plot(v$`Future_2041-2060_ssp126`$from_gcms)  # From GCMs
 
 
 projection_variability <- function(model_projections,
