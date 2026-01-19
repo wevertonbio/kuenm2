@@ -96,7 +96,7 @@
 #' organize_future_worldclim(input_dir = in_dir,
 #'                           output_dir = out_dir_future,
 #'                           name_format = "bio_", variables = NULL,
-#'                           fixed_variables = var$SoilType, mask = NULL,
+#'                           static_variables = var$SoilType, mask = NULL,
 #'                           overwrite = TRUE)
 #'
 #' # Prepare projections using fitted models to check variables
