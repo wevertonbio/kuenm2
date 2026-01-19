@@ -7,11 +7,12 @@ model parameterizations, and general circulation models (GCMs).
 ## Usage
 
 ``` r
-projection_variability(model_projections, by_replicate = TRUE, by_gcm = TRUE,
-                       by_model = TRUE, consensus = "median",
-                       write_files = FALSE, output_dir = NULL,
-                       return_rasters = TRUE, progress_bar = FALSE,
-                       verbose = TRUE, overwrite = FALSE)
+projection_variability(model_projections, from_replicates = TRUE,
+                       from_parameters = TRUE, from_gcms = TRUE,
+                       consensus = "median", write_files = FALSE,
+                       output_dir = NULL, return_rasters = TRUE,
+                       progress_bar = FALSE, verbose = TRUE,
+                       overwrite = FALSE)
 ```
 
 ## Arguments
@@ -23,19 +24,19 @@ projection_variability(model_projections, by_replicate = TRUE, by_gcm = TRUE,
   function. This object contains the file paths to the raster projection
   results and the thresholds used for binarizing the predictions.
 
-- by_replicate:
+- from_replicates:
 
   (logical) whether to compute the variance originating from replicates.
 
-- by_gcm:
-
-  (logical) whether to compute the variance originating from general
-  circulation models (GCMs)
-
-- by_model:
+- from_parameters:
 
   (logical) whether to compute the variance originating from model
   parameterizations.
+
+- from_gcms:
+
+  (logical) whether to compute the variance originating from general
+  circulation models (GCMs)
 
 - consensus:
 
@@ -120,11 +121,11 @@ out_dir_future <- file.path(tempdir(), "Future_raw5")
 ## Organize and rename the future climate data (structured by year and GCM)
 ### 'SoilType' will be appended as a static variable in each scenario
 organize_future_worldclim(input_dir = in_dir, output_dir = out_dir_future,
-                          name_format = "bio_", fixed_variables = var$SoilType)
+                          name_format = "bio_", static_variables = var$SoilType)
 #>   |                                                                              |                                                                      |   0%  |                                                                              |=========                                                             |  12%  |                                                                              |==================                                                    |  25%  |                                                                              |==========================                                            |  38%  |                                                                              |===================================                                   |  50%  |                                                                              |============================================                          |  62%  |                                                                              |====================================================                  |  75%  |                                                                              |=============================================================         |  88%  |                                                                              |======================================================================| 100%
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/Rtmpy68YXk/Future_raw5
+#> /tmp/RtmpZloiyP/Future_raw5
 
 # Step 3: Prepare data to run multiple projections
 ## An example with maxnet models
@@ -151,16 +152,16 @@ p <- project_selected(models = fitted_model_maxnet, projection_data = pr,
 #>   |                                                                              |                                                                      |   0%  |                                                                              |=======================                                               |  33%  |                                                                              |===============================================                       |  67%  |                                                                              |======================================================================| 100%
 
 # Step 5: Compute variance from distinct sources
-v <- projection_variability(model_projections = p, by_replicate = FALSE)
+v <- projection_variability(model_projections = p, from_replicates = FALSE)
 #> Calculating variability from distinct models: scenario 1 of 2
 #> Calculating variability from distinct models: scenario 2 of 2
 #> Calculating variability from distinct GCMs: scenario 2 of 2
 
-#terra::plot(v$Present$by_replicate)  # Variance from replicates, present projection
-terra::plot(v$Present$by_model)  # From models
+#terra::plot(v$Present$from_replicates)  # Variance from replicates, present projection
+terra::plot(v$Present$from_parameters)  # From models with distinct parameters
 
-#terra::plot(v$`Future_2041-2060_ssp126`$by_replicate)  # From replicates in future projection
-terra::plot(v$`Future_2041-2060_ssp126`$by_model)  # From models
+#terra::plot(v$`Future_2041-2060_ssp126`$from_replicates)  # From replicates in future projection
+terra::plot(v$`Future_2041-2060_ssp126`$from_parameters)  # From models
 
-terra::plot(v$`Future_2041-2060_ssp126`$by_gcm)  # From GCMs
+terra::plot(v$`Future_2041-2060_ssp126`$from_gcms)  # From GCMs
 ```

@@ -58,7 +58,7 @@ vignette.
 #Load packages
 library(kuenm2)
 library(terra)
-#> terra 1.8.86
+#> terra 1.8.93
 
 #Import calib_results_maxnet
 data("fitted_model_maxnet", package = "kuenm2")
@@ -79,11 +79,11 @@ out_dir_future <- file.path(tempdir(), "Future_raw") #Here, in a temporary direc
 organize_future_worldclim(input_dir = in_dir, #Path to the raw variables from WorldClim
                           output_dir = out_dir_future, 
                           name_format = "bio_", #Name format
-                          fixed_variables = var$SoilType, #Static variables
+                          static_variables = var$SoilType, #Static variables
                           progress_bar = FALSE, overwrite = TRUE)
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/RtmpFRtVo8/Future_raw
+#> /tmp/RtmpCb1h3T/Future_raw
 
 # Create a "Current_raw" folder in a temporary directory
 #and copy the rawvariables there.

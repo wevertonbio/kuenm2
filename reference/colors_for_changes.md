@@ -97,11 +97,11 @@ out_dir_future <- file.path(tempdir(), "Future_raw_color_example")
 ### 'SoilType' will be appended as a static variable in each scenario
 organize_future_worldclim(input_dir = in_dir, output_dir = out_dir_future,
                           name_format = "bio_",
-                          fixed_variables = var$SoilType)
+                          static_variables = var$SoilType)
 #>   |                                                                              |                                                                      |   0%  |                                                                              |=========                                                             |  12%  |                                                                              |==================                                                    |  25%  |                                                                              |==========================                                            |  38%  |                                                                              |===================================                                   |  50%  |                                                                              |============================================                          |  62%  |                                                                              |====================================================                  |  75%  |                                                                              |=============================================================         |  88%  |                                                                              |======================================================================| 100%
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/Rtmpy68YXk/Future_raw_color_example
+#> /tmp/RtmpZloiyP/Future_raw_color_example
 
 # Step 3: Prepare data to run multiple projections
 ## An example with maxnet models

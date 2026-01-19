@@ -158,11 +158,11 @@ out_dir_future <- file.path(tempdir(), "Future_raw1")
 # The 'SoilType' variable will be appended as a static variable in each scenario.
 # The files will be renamed following the "bio_" format
 organize_future_worldclim(input_dir = in_dir, output_dir = out_dir_future,
-                          name_format = "bio_", fixed_variables = var$SoilType)
+                          name_format = "bio_", static_variables = var$SoilType)
 #>   |                                                                              |                                                                      |   0%  |                                                                              |=========                                                             |  12%  |                                                                              |==================                                                    |  25%  |                                                                              |==========================                                            |  38%  |                                                                              |===================================                                   |  50%  |                                                                              |============================================                          |  62%  |                                                                              |====================================================                  |  75%  |                                                                              |=============================================================         |  88%  |                                                                              |======================================================================| 100%
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/Rtmpy68YXk/Future_raw1
+#> /tmp/RtmpZloiyP/Future_raw1
 
 # Prepare projections
 pr <- prepare_projection(variable_names = c("bio_1", "bio_7", "bio_12",
@@ -183,5 +183,5 @@ proj_pca <- perform_pca(raster_variables = var, exclude_from_pca = "SoilType",
                         out_dir = out_dir, center = TRUE, scale = TRUE)
 
 proj_pca$projection_directory  # Directory with projected PCA-variables
-#> [1] "/tmp/Rtmpy68YXk/PCA_projections"
+#> [1] "/tmp/RtmpZloiyP/PCA_projections"
 ```

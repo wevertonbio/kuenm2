@@ -68,7 +68,7 @@ example dataset within the package. Let’s load it.
 # Import fitted_model_maxnet
 data("fitted_model_maxnet", package = "kuenm2")
 
-# Print calibration result
+# Print fitted models
 fitted_model_maxnet
 #> fitted_models object summary
 #> ============================
@@ -84,10 +84,10 @@ To compare the results, let’s import a `fitted_models` object generated
 using the GLM algorithm:
 
 ``` r
-# Import calib_results_maxnet
+# Import fitted_model_glm
 data("fitted_model_glm", package = "kuenm2")
 
-# Print calibration result
+# Print fitted models
 fitted_model_glm
 #> fitted_models object summary
 #> ============================
@@ -223,7 +223,7 @@ terra::plot(p_maxnet$General_consensus$mean, main = "Maxnet")
 terra::plot(p_glm$General_consensus, main = "GLM")
 ```
 
-![](model_predictions_files/figure-html/unnamed-chunk-3-1.png)
+![](model_predictions_files/figure-html/compare-1.png)
 
   
 
@@ -451,7 +451,7 @@ terra::plot(p_difference, main = "Difference")
 terra::plot(new_bio7, main = "Hypothetical bio_7", type = "interval")
 ```
 
-![](model_predictions_files/figure-html/unnamed-chunk-4-1.png)
+![](model_predictions_files/figure-html/unnamed-chunk-3-1.png)
 
   
 
@@ -567,8 +567,8 @@ thr_mean_maxnet <- fitted_model_maxnet$thresholds$consensus$mean  # Maxnet
 thr_mean_glm <- fitted_model_glm$thresholds$consensus$mean  # glm
 
 # Binarize models
-mean_maxnet_bin <- (p_maxnet$General_consensus$mean > thr_mean_maxnet) * 1
-mean_glm_bin <- (p_glm$General_consensus > thr_mean_glm) * 1
+mean_maxnet_bin <- (p_maxnet$General_consensus$mean >= thr_mean_maxnet) * 1
+mean_glm_bin <- (p_glm$General_consensus >= thr_mean_glm) * 1
 
 # Compare results
 par(mfrow = c(1, 2))  # Set grid to plot
