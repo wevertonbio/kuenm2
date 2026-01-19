@@ -99,7 +99,7 @@ out_dir_future <- file.path(tempdir(), "Future_raw1")
 # The 'SoilType' variable will be appended as a static variable in each scenario.
 # The files will be renamed following the "bio_" format
 organize_future_worldclim(input_dir = in_dir, output_dir = out_dir_future,
-                          name_format = "bio_", fixed_variables = var$SoilType)
+                          name_format = "bio_", static_variables = var$SoilType)
 
 # Prepare projections
 pr <- prepare_projection(variable_names = c("bio_1", "bio_7", "bio_12",
