@@ -36,6 +36,9 @@ knitr::opts_chunk$set(
 #Load packages
 library(kuenm2)
 library(terra)
+
+# Saving original plotting parameters
+original_par <- par(no.readonly = TRUE)
 ```
 
 In the ["Project models to multiple scenarios"](model_projections.html) vignette, we show how to predict the models to multiple scenarios at once. We used as example the future scenarios available in [WorldClim](https://worldclim.org/data/cmip6/cmip6climate.html), which have an specific function (`organize_future_worldclim`) to organize the files in the specific hierarchical manner compatible with `kuenm2`. 
@@ -521,3 +524,10 @@ plot(summary_with_colors$Summary_changes)
 ```
 
 In this example, we can see that under present-day conditions, most GCMs indicate the species lost much of its suitable area during the LGM.
+
+<br> 
+
+```{r par_reset}
+# Reset plotting parameters
+par(original_par) 
+```
