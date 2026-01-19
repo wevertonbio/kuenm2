@@ -16,7 +16,7 @@
 #'                                past_files = NULL, past_period = NULL,
 #'                                past_gcm = NULL, future_files = NULL,
 #'                                future_period = NULL, future_pscen = NULL,
-#'                                future_gcm = NULL, fixed_variables = NULL,
+#'                                future_gcm = NULL, static_variables = NULL,
 #'                                check_extent = TRUE,
 #'                                resample_to_present = TRUE, mask = NULL,
 #'                                overwrite = FALSE)
@@ -51,12 +51,12 @@
 #' @param future_gcm (character) names of the subfolders within 'future_files',
 #' representing specific General Circulation Models (GCMs). Only applicable if
 #' 'future_files' is provided. Default is NULL.
-#' @param fixed_variables (SpatRaster) optional static variables (i.e., soil
+#' @param static_variables (SpatRaster) optional static variables (i.e., soil
 #' type) used in the model, which will remain unchanged in past or future
 #' scenarios. This variable will be included with each scenario. Default is NULL.
-#' @param check_extent (logical) whether to ensure that the 'fixed_variables'
+#' @param check_extent (logical) whether to ensure that the 'static_variables'
 #' have the same spatial extent as the bioclimatic variables. Applicable only if
-#' 'fixed_variables' is provided. Default is TRUE.
+#' 'static_variables' is provided. Default is TRUE.
 #' @param resample_to_present (logical) whether to resample past or future
 #' variables so they match the extent of the present variables. Only used when
 #' 'present_file' is provided. Default is TRUE.
@@ -124,7 +124,7 @@
 #'                                      "MRI-CGCM3"),
 #'                         resample_to_present = TRUE,
 #'                         overwrite = TRUE)
-#'
+
 organize_for_projection <- function(output_dir,
                                     models = NULL,
                                     variable_names = NULL,
@@ -137,7 +137,7 @@ organize_for_projection <- function(output_dir,
                                     future_period = NULL,
                                     future_pscen = NULL,
                                     future_gcm = NULL,
-                                    fixed_variables = NULL,
+                                    static_variables = NULL,
                                     check_extent = TRUE,
                                     resample_to_present = TRUE,
                                     mask = NULL,
@@ -235,9 +235,9 @@ Please ensure the future_gcm match the file names correctly.")
 
     }
 
-  if (!is.null(fixed_variables)) {
-    if (!inherits(fixed_variables, "SpatRaster")) {
-      stop("Argument 'fixed_variables' must be NULL or a 'SpatRaster'.")
+  if (!is.null(static_variables)) {
+    if (!inherits(static_variables, "SpatRaster")) {
+      stop("Argument 'static_variables' must be NULL or a 'SpatRaster'.")
     }
   }
   if (!is.null(mask) & !inherits(mask, c("SpatVector", "SpatRaster", "SpatExtent"))) {
@@ -273,9 +273,9 @@ Please ensure you used list.files(full.names = TRUE) to provide the correct file
 
     #Read file
     r_present <- terra::rast(present_file)
-    #Check names, mask and append fixed_variables
+    #Check names, mask and append static_variables
     r_present <- helper_organize_proj(r = r_present, mask, variable_names,
-                                      fixed_variables, check_extent,
+                                      static_variables, check_extent,
                                       resample_to_present = FALSE,
                                       r_present = NULL,
                                       file_name = "present_files")
@@ -311,7 +311,7 @@ Please ensure you used list.files(full.names = TRUE) to provide the correct file
       r_past_i <- r_past[grepl(period_i, names(r_past)) &
                             grepl(gcm_i, names(r_past))][[1]]
       r_past_i <- helper_organize_proj(r = r_past_i, mask, variable_names,
-                                       fixed_variables, check_extent,
+                                       static_variables, check_extent,
                                        resample_to_present = resample_to_present,
                                        r_present = r_present,
                                        categorical_variables = categorical_variables,
@@ -352,7 +352,7 @@ Please ensure you used list.files(full.names = TRUE) to provide the correct file
                            grepl(ssp_i, names(r_future)) &
                              grepl(gcm_i, names(r_future))][[1]]
       r_future_i <- helper_organize_proj(r = r_future_i, mask, variable_names,
-                                       fixed_variables, check_extent,
+                                       static_variables, check_extent,
                                        resample_to_present = resample_to_present,
                                        r_present = r_present,
                                        categorical_variables = categorical_variables,

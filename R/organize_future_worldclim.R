@@ -10,7 +10,7 @@
 #'
 #' @usage
 #' organize_future_worldclim(input_dir, output_dir, name_format = "bio_",
-#'                           variables = NULL, fixed_variables = NULL,
+#'                           variables = NULL, static_variables = NULL,
 #'                           check_extent = TRUE, mask = NULL,
 #'                           progress_bar = TRUE, overwrite = FALSE)
 #'
@@ -23,12 +23,12 @@
 #' Default is "bio_".
 #' @param variables (character) the names of the variables to retain. Default
 #' is NULL, meaning all variables will be kept.
-#' @param fixed_variables (SpatRaster) optional static variables (i.e., soil
+#' @param static_variables (SpatRaster) optional static variables (i.e., soil
 #' type) used in the model, which will remain unchanged in future scenarios.
 #' This variable will be included with each future scenario. Default is NULL.
-#' @param check_extent (logical) whether to ensure that the `fixed_variables`
+#' @param check_extent (logical) whether to ensure that the `static_variables`
 #' have the same spatial extent as the bioclimatic variables. Applicable only
-#' if `fixed_variables` is provided. Default is TRUE.
+#' if `static_variables` is provided. Default is TRUE.
 #' @param mask (SpatRaster, SpatVector, or SpatExtent) spatial object used to
 #' mask the variables (optional). Default is NULL.
 #' @param progress_bar (logical) whether to display a progress bar during
@@ -77,7 +77,7 @@
 #' # The files will be renamed following the "bio_" format
 #' organize_future_worldclim(input_dir = in_dir, output_dir = out_dir,
 #'                           name_format = "bio_",
-#'                           fixed_variables = var$SoilType)
+#'                           static_variables = var$SoilType)
 #'
 #' # Check files organized
 #' dir(out_dir, recursive = TRUE)
@@ -86,7 +86,7 @@ organize_future_worldclim <- function(input_dir,
                                       output_dir,
                                       name_format = "bio_",
                                       variables = NULL,
-                                      fixed_variables = NULL,
+                                      static_variables = NULL,
                                       check_extent = TRUE,
                                       mask = NULL,
                                       progress_bar = TRUE,
@@ -115,9 +115,9 @@ organize_future_worldclim <- function(input_dir,
     stop("Argument 'variables' must be NULL or a 'character'.")
   }
 
-  if (!is.null(fixed_variables)) {
-    if (!inherits(fixed_variables, "SpatRaster")) {
-      stop("Argument 'fixed_variables' must be NULL or a 'SpatRaster'.")
+  if (!is.null(static_variables)) {
+    if (!inherits(static_variables, "SpatRaster")) {
+      stop("Argument 'static_variables' must be NULL or a 'SpatRaster'.")
     }
   }
 
@@ -177,18 +177,18 @@ organize_future_worldclim <- function(input_dir,
     }
 
     #Append fixed variables
-    if (!is.null(fixed_variables)) {
+    if (!is.null(static_variables)) {
       #If there is a mask, crop
       if (!is.null(mask)) {
-        fixed_variables <- terra::crop(fixed_variables, mask, mask = TRUE)
+        static_variables <- terra::crop(static_variables, mask, mask = TRUE)
       }
       if (check_extent) {
-        if (terra::ext(fixed_variables) != terra::ext(var_x)) {
-          terra::ext(fixed_variables) <- terra::ext(var_x)
+        if (terra::ext(static_variables) != terra::ext(var_x)) {
+          terra::ext(static_variables) <- terra::ext(var_x)
         }
       }
       #Append
-      var_x <- c(var_x, fixed_variables)
+      var_x <- c(var_x, static_variables)
     }
 
     #Create folders to save results

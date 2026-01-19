@@ -244,7 +244,7 @@ cumulative_predictions <- function(predictions){
   return(normalized_cumulative[original_order])
 }
 
-helper_organize_proj <- function(r, mask, variable_names, fixed_variables,
+helper_organize_proj <- function(r, mask, variable_names, static_variables,
                                  check_extent, resample_to_present,
                                  r_present =NULL, categorical_variables = NULL,
                                  file_name){
@@ -255,24 +255,24 @@ helper_organize_proj <- function(r, mask, variable_names, fixed_variables,
   }
 
   #Append fixed variables, if necessary
-  if(!is.null(fixed_variables)){
+  if(!is.null(static_variables)){
     #Check if they have the same resolution
-    if(any(terra::res(fixed_variables) != terra::res(r))){
-      stop("Resolution of fixed_variables are different from the resolution of ",
+    if(any(terra::res(static_variables) != terra::res(r))){
+      stop("Resolution of static_variables are different from the resolution of ",
 file_name)
     }
 
     if(!is.null(mask)){
-      fixed_variables <- terra::crop(fixed_variables, mask, mask = TRUE)
+      static_variables <- terra::crop(static_variables, mask, mask = TRUE)
     }
     #Check extent
     if(check_extent){
-      if(terra::ext(fixed_variables) != terra::ext(r)){
-        terra::ext(fixed_variables) <- terra::ext(r)
+      if(terra::ext(static_variables) != terra::ext(r)){
+        terra::ext(static_variables) <- terra::ext(r)
       }
     }
     #Append variables
-    r <- c(r, fixed_variables)
+    r <- c(r, static_variables)
   }
 
   var_out <- setdiff(variable_names, names(r))

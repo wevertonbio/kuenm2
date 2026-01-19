@@ -5,7 +5,7 @@
 \title{Organize and structure future climate variables from WorldClim}
 \usage{
 organize_future_worldclim(input_dir, output_dir, name_format = "bio_",
-                          variables = NULL, fixed_variables = NULL,
+                          variables = NULL, static_variables = NULL,
                           check_extent = TRUE, mask = NULL,
                           progress_bar = TRUE, overwrite = FALSE)
 }
@@ -23,13 +23,13 @@ Default is "bio_".}
 \item{variables}{(character) the names of the variables to retain. Default
 is NULL, meaning all variables will be kept.}
 
-\item{fixed_variables}{(SpatRaster) optional static variables (i.e., soil
+\item{static_variables}{(SpatRaster) optional static variables (i.e., soil
 type) used in the model, which will remain unchanged in future scenarios.
 This variable will be included with each future scenario. Default is NULL.}
 
-\item{check_extent}{(logical) whether to ensure that the \code{fixed_variables}
+\item{check_extent}{(logical) whether to ensure that the \code{static_variables}
 have the same spatial extent as the bioclimatic variables. Applicable only
-if \code{fixed_variables} is provided. Default is TRUE.}
+if \code{static_variables} is provided. Default is TRUE.}
 
 \item{mask}{(SpatRaster, SpatVector, or SpatExtent) spatial object used to
 mask the variables (optional). Default is NULL.}
@@ -83,7 +83,7 @@ out_dir <- file.path(tempdir(), "Future_raw")
 # The files will be renamed following the "bio_" format
 organize_future_worldclim(input_dir = in_dir, output_dir = out_dir,
                           name_format = "bio_",
-                          fixed_variables = var$SoilType)
+                          static_variables = var$SoilType)
 
 # Check files organized
 dir(out_dir, recursive = TRUE)
