@@ -434,7 +434,7 @@ The `model_projections` object stores only the paths to the resulting raster lay
 p_mean <- import_projections(projection = p, consensus = "mean")
 
 # Plot all scenarios
-plot(p_mean, cex.main = 0.8)
+terra::plot(p_mean, cex.main = 0.8)
 ```
 
 <br> 
@@ -449,9 +449,16 @@ p_2060_ssp126 <- import_projections(projection = p, consensus = "mean",
                                     future_pscen = "ssp126")
 
 # Plot all scenarios
-plot(p_2060_ssp126, cex.main = 0.8)
+terra::plot(p_2060_ssp126, cex.main = 0.8)
 ```
 
 <br> 
 
 With the `model_projections` object, we can compute changes in suitable areas (`projection_changes()`), explore variability patterns coming from replicates, parameterizations, and GCMs (`projection_variability()`), and perform analysis of extrapolation risks (`projection_mop()`). For more details, check [Explore Variability and Uncertainty in Projections](variability_and_uncertainty.html).
+
+<br> 
+
+```{r par_reset}
+# Reset plotting parameters
+par(original_par) 
+```
