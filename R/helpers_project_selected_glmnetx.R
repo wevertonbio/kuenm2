@@ -26,7 +26,7 @@ multiple_projections <- function(i, res_path, raster_pattern, par_list) {
                      consensus_general = par_list$consensus_general,
                      consensus = par_list$consensus,  # weighted mean
                      extrapolation_type = par_list$extrapolation_type,
-                     var_to_clamp = par_list$var_to_clamp,
+                     var_to_restrict = par_list$var_to_restrict,
                      type = par_list$type,
                      overwrite = par_list$overwrite,
                      progress_bar = FALSE,

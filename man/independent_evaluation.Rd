@@ -7,7 +7,7 @@
 independent_evaluation(fitted_models, new_data,
                               consensus = c("mean", "median"),
                               type = "cloglog", extrapolation_type = "E",
-                              var_to_clamp = NULL, perform_mop = TRUE,
+                              var_to_restrict = NULL, perform_mop = TRUE,
                               mop_type = "detailed",
                               calculate_distance = TRUE,
                               where_distance = "all",
@@ -37,7 +37,7 @@ valid options are \code{"raw"}, \code{"cumulative"}, \code{"logistic"}, and \cod
 be transferred with three options: free extrapolation ('E'), extrapolation
 with clamping ('EC'), and no extrapolation ('NE'). Default = 'E'. See details.}
 
-\item{var_to_clamp}{(character) vector specifying which variables to clamp or
+\item{var_to_restrict}{(character) vector specifying which variables to clamp or
 not extrapolate. Only applicable if extrapolation_type is "EC" or "NE".
 Default is \code{NULL}, meaning all variables will be clamped or not extrapolated.}
 

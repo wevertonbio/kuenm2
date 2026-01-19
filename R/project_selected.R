@@ -12,7 +12,7 @@
 #'                  consensus_per_model = TRUE, consensus_general = TRUE,
 #'                  consensus = c("median", "range", "mean", "stdev"),
 #'                  write_replicates = FALSE, extrapolation_type = "E",
-#'                  var_to_clamp = NULL, type = NULL, overwrite = FALSE,
+#'                  var_to_restrict = NULL, type = NULL, overwrite = FALSE,
 #'                  parallel = FALSE, ncores = NULL,
 #'                  progress_bar = TRUE, verbose = TRUE)
 #'
@@ -37,9 +37,9 @@
 #' @param extrapolation_type (character) extrapolation type of model. Models can
 #' be transferred with three options: free extrapolation ('E'), extrapolation
 #' with clamping ('EC'), and no extrapolation ('NE'). Default = 'E'. See details.
-#' @param var_to_clamp (character) vector specifying which variables to clamp.
-#' Only applicable if extrapolation_type is "EC" or "NE". Default is `NULL`, meaning all
-#' variables will be clamped or not extrapolated.
+#' @param var_to_restrict (character) vector specifying which variables to clamp
+#' or not to extrapolate for. Only applicable if extrapolation_type is "EC" or "NE".
+#' Default is `NULL`, clamping and no extrapolation will be done for all variables.
 #' @param type (character) the format of prediction values. For `maxnet` models,
 #' valid options are `"raw"`, `"cumulative"`, `"logistic"`, and `"cloglog"`. For
 #' `glm` models, valid options are `"response"` and `"raw"`. If `NULL` (default),
@@ -130,7 +130,7 @@ project_selected <- function(models,
                              consensus = c("median", "range", "mean", "stdev"),
                              write_replicates = FALSE,
                              extrapolation_type = "E",
-                             var_to_clamp = NULL,
+                             var_to_restrict = NULL,
                              type = NULL,
                              overwrite = FALSE,
                              parallel = FALSE,
@@ -175,9 +175,9 @@ project_selected <- function(models,
     stop("'consensus' must contain at least one of the options: 'median' or 'mean'.")
   }
 
-  if (extrapolation_type %in% c("EC", "NE") & !is.null(var_to_clamp) &
-      !inherits(var_to_clamp, "character")) {
-    stop("Argument 'var_to_clamp' must be NULL or 'character'.")
+  if (extrapolation_type %in% c("EC", "NE") & !is.null(var_to_restrict) &
+      !inherits(var_to_restrict, "character")) {
+    stop("Argument 'var_to_restrict' must be NULL or 'character'.")
   }
 
   if(is.null(type)){
@@ -220,7 +220,7 @@ project_selected <- function(models,
                    consensus = consensus,
                    write_replicates = write_replicates,
                    extrapolation_type = extrapolation_type,
-                   var_to_clamp = var_to_clamp,
+                   var_to_restrict = var_to_restrict,
                    type = type,
                    overwrite = overwrite)
 

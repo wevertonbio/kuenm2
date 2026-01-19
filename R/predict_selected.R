@@ -11,7 +11,7 @@
 #'                  write_replicates = FALSE, out_dir = NULL,
 #'                  consensus_per_model = TRUE, consensus_general = TRUE,
 #'                  consensus = c("median", "range", "mean", "stdev"),
-#'                  extrapolation_type = "E", var_to_clamp = NULL,
+#'                  extrapolation_type = "E", var_to_restrict = NULL,
 #'                  type = "cloglog", overwrite = FALSE, progress_bar = TRUE)
 #'
 #' @param models an object of class `fitted_models` returned by the
@@ -40,9 +40,9 @@
 #' @param extrapolation_type (character) extrapolation type of model. Models can
 #' be transferred with three options: free extrapolation ('E'), extrapolation
 #' with clamping ('EC'), and no extrapolation ('NE'). Default = 'E'. See details.
-#' @param var_to_clamp (character) vector specifying which variables to clamp or
-#' not extrapolate. Only applicable if extrapolation_type is "EC" or "NE".
-#' Default is `NULL`, meaning all variables will be clamped or not extrapolated.
+#' @param var_to_restrict (character) vector specifying which variables to clamp
+#' or not to extrapolate for. Only applicable if extrapolation_type is "EC" or "NE".
+#' Default is `NULL`, clamping and no extrapolation will be done for all variables.
 #' @param type (character) the format of prediction values. For `maxnet` models,
 #' valid options are `"raw"`, `"cumulative"`, `"logistic"`, and `"cloglog"`.
 #' For `glm` models, valid options are `"cloglog"`, `"response"`, `"raw"`,
@@ -60,7 +60,7 @@
 #' When clamping, the variables are set to minimum and maximum values
 #' established for the maximum and minimum values within calibration data. In
 #' the no extrapolation approach, any cell with at least one variable listed in
-#' `var_to_clamp` falling outside the calibration range is assigned a suitability
+#' `var_to_restrict` falling outside the calibration range is assigned a suitability
 #' value of 0.
 #'
 #' @return
@@ -107,7 +107,7 @@ predict_selected <- function(models,
                              consensus_general = TRUE,
                              consensus = c("median", "range", "mean", "stdev"),
                              extrapolation_type = "E",
-                             var_to_clamp = NULL,
+                             var_to_restrict = NULL,
                              type = "cloglog",
                              overwrite = FALSE,
                              progress_bar = TRUE) {
@@ -157,9 +157,9 @@ predict_selected <- function(models,
          "\nAvailable options are: 'E', 'EC', and 'NE'.")
   }
 
-  if (extrapolation_type %in% c("E", "EC") & !is.null(var_to_clamp) &
-      !inherits(var_to_clamp, "character")) {
-    stop("Argument 'var_to_clamp' must be NULL or 'character'.")
+  if (extrapolation_type %in% c("E", "EC") & !is.null(var_to_restrict) &
+      !inherits(var_to_restrict, "character")) {
+    stop("Argument 'var_to_restrict' must be NULL or 'character'.")
   }
 
 
@@ -244,19 +244,19 @@ predict_selected <- function(models,
   if (extrapolation_type == "EC") {
     varmin <- models[[1]][[1]]$varmin[-1]  # Get var min
     varmax <- models[[1]][[1]]$varmax[-1]  # Get var max
-    if (is.null(var_to_clamp)) {
-      var_to_clamp <- setdiff(names(varmin), c("pr_bg", "fold"))
+    if (is.null(var_to_restrict)) {
+      var_to_restrict <- setdiff(names(varmin), c("pr_bg", "fold"))
     }
 
     if(inherits(new_variables, "SpatRaster")){
-      clamped_variables <- terra::rast(lapply(var_to_clamp, function(i) {
+      clamped_variables <- terra::rast(lapply(var_to_restrict, function(i) {
         terra::clamp(new_variables[[i]], lower = varmin[i],
                      upper = varmax[i], values = TRUE)
     }))
     new_variables[[names(clamped_variables)]] <- clamped_variables
     } else if (inherits(new_variables, "data.frame")){
       # Apply clamp for each column
-      for (col_name in var_to_clamp) {
+      for (col_name in var_to_restrict) {
         # Clampar lower values
         new_variables[[col_name]][new_variables[[col_name]] < varmin[col_name]] <- varmin[col_name]
         # Clamp higher values
@@ -268,20 +268,20 @@ predict_selected <- function(models,
   if(extrapolation_type == "NE"){
     varmin <- models[[1]][[1]]$varmin[-1]  # Get var min
     varmax <- models[[1]][[1]]$varmax[-1]  # Get var max
-    if (is.null(var_to_clamp)) {
-      var_to_clamp <- setdiff(names(varmin), c("pr_bg", "fold"))
+    if (is.null(var_to_restrict)) {
+      var_to_restrict <- setdiff(names(varmin), c("pr_bg", "fold"))
     }
 
     if(inherits(new_variables, "SpatRaster")){
       #Idenfity cells to not extrapolate
-      no_extrapolate <- lapply(var_to_clamp, function(i){
+      no_extrapolate <- lapply(var_to_restrict, function(i){
         i_min <- terra::cells(x = (new_variables[[i]] < varmin[i]) * 1, y = 1)
         i_max <- terra::cells(x = (new_variables[[i]] > varmax[i]) * 1, y = 1)
         return(unique(i_min, i_max))
       })
 
       } else if(inherits(new_variables, "data.frame")){
-        no_extrapolate <- lapply(var_to_clamp, function(i){
+        no_extrapolate <- lapply(var_to_restrict, function(i){
           i_min <- which(new_variables[,i] < varmin[i])
           i_max <- which(new_variables[,i] > varmax[i])
           return(unique(i_min, i_max))

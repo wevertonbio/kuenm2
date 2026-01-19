@@ -8,7 +8,7 @@ predict_selected(models, new_variables, mask = NULL, write_files = FALSE,
                  write_replicates = FALSE, out_dir = NULL,
                  consensus_per_model = TRUE, consensus_general = TRUE,
                  consensus = c("median", "range", "mean", "stdev"),
-                 extrapolation_type = "E", var_to_clamp = NULL,
+                 extrapolation_type = "E", var_to_restrict = NULL,
                  type = "cloglog", overwrite = FALSE, progress_bar = TRUE)
 }
 \arguments{
@@ -48,9 +48,9 @@ calculate across replicates and models. Available options are \code{"median"},
 be transferred with three options: free extrapolation ('E'), extrapolation
 with clamping ('EC'), and no extrapolation ('NE'). Default = 'E'. See details.}
 
-\item{var_to_clamp}{(character) vector specifying which variables to clamp or
-not extrapolate. Only applicable if extrapolation_type is "EC" or "NE".
-Default is \code{NULL}, meaning all variables will be clamped or not extrapolated.}
+\item{var_to_restrict}{(character) vector specifying which variables to clamp
+or not to extrapolate for. Only applicable if extrapolation_type is "EC" or "NE".
+Default is \code{NULL}, clamping and no extrapolation will be done for all variables.}
 
 \item{type}{(character) the format of prediction values. For \code{maxnet} models,
 valid options are \code{"raw"}, \code{"cumulative"}, \code{"logistic"}, and \code{"cloglog"}.
@@ -81,7 +81,7 @@ predictions (\code{extrapolation_type = "E"}), extrapolate with clamping
 When clamping, the variables are set to minimum and maximum values
 established for the maximum and minimum values within calibration data. In
 the no extrapolation approach, any cell with at least one variable listed in
-\code{var_to_clamp} falling outside the calibration range is assigned a suitability
+\code{var_to_restrict} falling outside the calibration range is assigned a suitability
 value of 0.
 }
 \examples{

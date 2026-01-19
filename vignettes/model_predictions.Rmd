@@ -326,7 +326,7 @@ terra::plot(new_bio7, main = "Hypothetical bio_7", type = "interval")
 
 Note that when we clamp the variables, regions with extremely low values of (the hypothetical) `bio_7` exhibit lower predicted suitability values compared to when free extrapolation is allowed.
 
-By default, when `extrapolation_type = "EC"` is set, all predictor variables are clamped. You can specify which variables to clamp using the `var_to_clamp` argument.
+By default, when `extrapolation_type = "EC"` is set, all predictor variables are clamped. You can specify which variables to clamp using the `var_to_restrict` argument.
 
 <br>
 
@@ -356,7 +356,7 @@ terra::plot(new_bio7, main = "Hypothetical bio_7", type = "interval")
 
 In this example, a large portion of the predicted area shows zero suitability. This is because, in this hypothetical scenario, much of the region has `bio_7` values lower than those in the training data, which has a minimum of 15ºC. Suitability values greater than zero are only in areas where `bio_7` falls within the training range.
 
-By default, when `extrapolation_type = "NE"` is set, all predictor variables are considered for this process. You can specify a subset of variables to be considered for extrapolation using the `var_to_clamp` argument.
+By default, when `extrapolation_type = "NE"` is set, all predictor variables are considered for this process. You can specify a subset of variables to be considered for extrapolation using the `var_to_restrict` argument.
 
 <br>
 

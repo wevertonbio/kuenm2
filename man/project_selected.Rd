@@ -8,7 +8,7 @@ project_selected(models, projection_data, out_dir, mask = NULL,
                  consensus_per_model = TRUE, consensus_general = TRUE,
                  consensus = c("median", "range", "mean", "stdev"),
                  write_replicates = FALSE, extrapolation_type = "E",
-                 var_to_clamp = NULL, type = NULL, overwrite = FALSE,
+                 var_to_restrict = NULL, type = NULL, overwrite = FALSE,
                  parallel = FALSE, ncores = NULL,
                  progress_bar = TRUE, verbose = TRUE)
 }
@@ -43,9 +43,9 @@ replicate. Default is FALSE.}
 be transferred with three options: free extrapolation ('E'), extrapolation
 with clamping ('EC'), and no extrapolation ('NE'). Default = 'E'. See details.}
 
-\item{var_to_clamp}{(character) vector specifying which variables to clamp.
-Only applicable if extrapolation_type is "EC" or "NE". Default is \code{NULL}, meaning all
-variables will be clamped or not extrapolated.}
+\item{var_to_restrict}{(character) vector specifying which variables to clamp
+or not to extrapolate for. Only applicable if extrapolation_type is "EC" or "NE".
+Default is \code{NULL}, clamping and no extrapolation will be done for all variables.}
 
 \item{type}{(character) the format of prediction values. For \code{maxnet} models,
 valid options are \code{"raw"}, \code{"cumulative"}, \code{"logistic"}, and \code{"cloglog"}. For

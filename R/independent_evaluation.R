@@ -10,7 +10,7 @@
 #' @usage independent_evaluation(fitted_models, new_data,
 #'                               consensus = c("mean", "median"),
 #'                               type = "cloglog", extrapolation_type = "E",
-#'                               var_to_clamp = NULL, perform_mop = TRUE,
+#'                               var_to_restrict = NULL, perform_mop = TRUE,
 #'                               mop_type = "detailed",
 #'                               calculate_distance = TRUE,
 #'                               where_distance = "all",
@@ -34,7 +34,7 @@
 #' @param extrapolation_type (character) extrapolation type of model. Models can
 #' be transferred with three options: free extrapolation ('E'), extrapolation
 #' with clamping ('EC'), and no extrapolation ('NE'). Default = 'E'. See details.
-#' @param var_to_clamp (character) vector specifying which variables to clamp or
+#' @param var_to_restrict (character) vector specifying which variables to clamp or
 #' not extrapolate. Only applicable if extrapolation_type is "EC" or "NE".
 #' Default is `NULL`, meaning all variables will be clamped or not extrapolated.
 #' @param perform_mop (logical) whether to execute a Mobility-Oriented Parity
@@ -116,7 +116,7 @@ independent_evaluation <- function(fitted_models, new_data,
                                    consensus = c("mean", "median"),
                                    type = "cloglog",
                                    extrapolation_type = "E",
-                                   var_to_clamp = NULL,
+                                   var_to_restrict = NULL,
                                    perform_mop = TRUE,
                                    mop_type = "detailed",
                                    calculate_distance = TRUE,
@@ -178,9 +178,9 @@ independent_evaluation <- function(fitted_models, new_data,
          "\nAvailable options are: 'E', 'EC', and 'NE'.")
   }
 
-  if (extrapolation_type %in% c("E", "EC") & !is.null(var_to_clamp) &
-      !inherits(var_to_clamp, "character")) {
-    stop("Argument 'var_to_clamp' must be NULL or 'character'.")
+  if (extrapolation_type %in% c("E", "EC") & !is.null(var_to_restrict) &
+      !inherits(var_to_restrict, "character")) {
+    stop("Argument 'var_to_restrict' must be NULL or 'character'.")
   }
 
 
@@ -239,7 +239,7 @@ independent_evaluation <- function(fitted_models, new_data,
                                 new_variables = new_data[,v],
                                 consensus = consensus,
                                 extrapolation_type = extrapolation_type,
-                                var_to_clamp = var_to_clamp,
+                                var_to_restrict = var_to_restrict,
                                 type = type,
                                 progress_bar = FALSE)
   #Save names
@@ -251,7 +251,7 @@ independent_evaluation <- function(fitted_models, new_data,
                               new_variables = bg_data[,v],
                               consensus = consensus,
                               extrapolation_type = extrapolation_type,
-                              var_to_clamp = var_to_clamp,
+                              var_to_restrict = var_to_restrict,
                               type = type,
                               progress_bar = FALSE)
 
