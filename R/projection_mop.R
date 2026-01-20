@@ -24,7 +24,8 @@
 #' @param out_dir (character) a path to a root directory for saving the raster
 #' file of each projection.
 #' @param subset_variables (logical) whether to include in the analysis only the
-#' variables present in the selected models. Default is FALSE
+#' variables present in the selected models. Only applicable if `data` is a
+#' `fitted_models` object. Default is FALSE
 #' @param mask (SpatRaster, SpatVector, or SpatExtent) spatial object used to
 #' mask the variables (optional). Default is NULL.
 #' @param type (character) type of MOP analysis to be performed. Options
@@ -112,10 +113,8 @@
 #'     rows) in \code{m}.
 #'     - *N_g* - total number of elements (cells with values or valid
 #'     rows) in \code{g}.
-#'     - *m_min* - minimum values (lower limit) of the variables in reference
-#'     conditions (\code{m}).
-#'     - *m_max* - maximum values (upper limit) of the variables in reference
-#'     conditions (\code{m}).
+#'     - *m_ranges* - the range (minimum and maximum values) of the variable in
+#'     reference conditions (\code{m})
 #' - **mop_distances** - if \code{calculate_distance} = TRUE, a SpatRaster or
 #' vector with distance values for the set of interest (\code{g}). Higher values
 #' represent greater dissimilarity compared to the set of reference (\code{m}).
@@ -295,6 +294,10 @@ projection_mop <- function(data,
     stop("Argument 'calculate_distance' must be 'logical'.")
   }
 
+  if(!inherits(fix_NA, "logical")){
+    stop("Argument 'fix_NA' must be 'logical'.")
+  }
+
   #Get calibration data
   m <-  data$calibration_data[, -1]
 
@@ -346,7 +349,7 @@ projection_mop <- function(data,
     #Subset variables?
     if (subset_variables) {
       v <- unique(unlist(sapply(data$Models, function(x)
-        names(x$Full_model$betas)[-1],
+        names(x$Full_model$betas),
                   simplify = F)))
       v <- gsub("I\\((.*?)\\^2\\)", "\\1", v) #Remove quadratic pattern
       v <- v[!grepl("categorical", v)] #Remove categorical pattern
@@ -358,7 +361,7 @@ projection_mop <- function(data,
       }
 
       r <- r[[v]]
-      m <- m[, v]
+      m <- m[, v, drop = FALSE]
     }
 
    #See if there are variables in G absent in M
@@ -466,6 +469,7 @@ projection_mop <- function(data,
                              overwrite = overwrite)
         }
       })
+
       #Save interpretation_combined
       if(!na_in_range){
         interpretation_combined <- rbind(
