@@ -26,7 +26,8 @@ the rasters representing each scenario.}
 file of each projection.}
 
 \item{subset_variables}{(logical) whether to include in the analysis only the
-variables present in the selected models. Default is FALSE}
+variables present in the selected models. Only applicable if \code{data} is a
+\code{fitted_models} object. Default is FALSE}
 
 \item{mask}{(SpatRaster, SpatVector, or SpatExtent) spatial object used to
 mask the variables (optional). Default is NULL.}
@@ -113,10 +114,8 @@ distance calculation.
 rows) in \code{m}.
 \item \emph{N_g} - total number of elements (cells with values or valid
 rows) in \code{g}.
-\item \emph{m_min} - minimum values (lower limit) of the variables in reference
-conditions (\code{m}).
-\item \emph{m_max} - maximum values (upper limit) of the variables in reference
-conditions (\code{m}).
+\item \emph{m_ranges} - the range (minimum and maximum values) of the variable in
+reference conditions (\code{m})
 }
 \item \strong{mop_distances} - if \code{calculate_distance} = TRUE, a SpatRaster or
 vector with distance values for the set of interest (\code{g}). Higher values

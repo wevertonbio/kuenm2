@@ -94,6 +94,35 @@ colors_for_changes <- function(changes_projections, gain_color = "#009E73",
                                stable_unsuitable = "grey",
                                max_alpha = 1, min_alpha = 0.25){
 
+  #### Check data ####
+  if(!inherits(changes_projections, "changes_projections")){
+    stop("Argument 'changes_projections' must be an object of class 'changes_projections'")
+  }
+
+  if (!inherits(gain_color, "character") || length(gain_color) > 1) {
+    stop("Argument 'gain_color' must be a single 'character' value.")
+  }
+  if (!inherits(loss_color, "character") || length(loss_color) > 1) {
+    stop("Argument 'loss_color' must be a single 'character' value.")
+  }
+  if (!inherits(stable_suitable, "character") || length(stable_suitable) > 1) {
+    stop("Argument 'stable_suitable' must be a single 'character' value.")
+  }
+  if (!inherits(stable_unsuitable, "character") || length(stable_unsuitable) > 1) {
+    stop("Argument 'stable_unsuitable' must be a single 'character' value.")
+  }
+  if(!inherits(max_alpha, "numeric") || length(max_alpha) > 1 ||
+     min(max_alpha) < 0 || max(max_alpha) > 1){
+    stop("Argument 'max_alpha' must be a single numeric value between 0 and 1")
+  }
+  if(!inherits(min_alpha, "numeric") || length(min_alpha) > 1 ||
+     min(min_alpha) < 0 || max(min_alpha) > 1){
+    stop("Argument 'min_alpha' must be a single numeric value between 0 and 1")
+  }
+  if(min_alpha >= max_alpha){
+    stop("Argument 'min_alpha' can't be equal or higher than 'max_alpha'")
+  }
+
   #Create list to save results
   r <- list()
 

@@ -237,6 +237,10 @@
     stop("Argument 'output_dir' must be a 'character'.")
   }
 
+  if (!inherits(force_resample, "logical")) {
+    stop("Argument 'force_resample' must be 'logical' (TRUE or FALSE)")
+  }
+
   #Create directory to save results, if necessary
   if (write_results) {
     if (is.null(output_dir)) {

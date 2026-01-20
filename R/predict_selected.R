@@ -554,6 +554,7 @@ predict_selected <- function(models,
 
     names(res) <- nm
     res$General_consensus <- as.data.frame(gen_res)
+    colnames(res$General_consensus) <- names(gen_res)
   }
 
   # Write results to disk if required
