@@ -222,7 +222,7 @@ independent_evaluation <- function(fitted_models, new_data,
 
   #Check variables
   v <- unique(unlist(sapply(fitted_models$Models, function(x)
-    names(x$Full_model$betas)[-1],
+    names(x$Full_model$varmax)[-1],
     simplify = F)))
   v <- gsub("I\\((.*?)\\^2\\)", "\\1", v) #Remove quadratic pattern
   v <- v[!grepl("categorical", v)] #Remove categorical pattern
@@ -236,7 +236,7 @@ independent_evaluation <- function(fitted_models, new_data,
 
   #Predict to independent records
   pred_test <- predict_selected(models = fitted_models,
-                                new_variables = new_data[,v],
+                                new_variables = new_data[,v, drop = FALSE],
                                 consensus = consensus,
                                 extrapolation_type = extrapolation_type,
                                 var_to_restrict = var_to_restrict,
@@ -248,7 +248,7 @@ independent_evaluation <- function(fitted_models, new_data,
   #Predict to background
   bg_data <- fitted_models$calibration_data
   pred_bg <- predict_selected(models = fitted_models,
-                              new_variables = bg_data[,v],
+                              new_variables = bg_data[,v, drop = FALSE],
                               consensus = consensus,
                               extrapolation_type = extrapolation_type,
                               var_to_restrict = var_to_restrict,
@@ -277,7 +277,7 @@ independent_evaluation <- function(fitted_models, new_data,
   names(thr)[names(thr) == "consensus"] <- "General_consensus"
 
   res <- lapply(names(pred_test), function(i){
-    #print(i)
+    # print(i)
     #Get pred test i
     p_i <- pred_test[[i]]
 
@@ -296,11 +296,15 @@ independent_evaluation <- function(fitted_models, new_data,
 
     #Calculate proc
     proc_i <- lapply(names(p_i), function(x){
-      fpROC::auc_metrics(test_prediction = p_i[[x]],
+      res_x <- fpROC::auc_metrics(test_prediction = p_i[[x]],
                          prediction = bg_i[[x]],
                          threshold = fitted_models$omission_rate)$summary[, 4:5]
+      if(is.null(res_x)){
+        res_x <- c(Mean_AUC_ratio = NA, pval_pROC = NA)
+      }
+      return(res_x)
     })
-    names(proc_i) <- names(p_i$Model_consensus)
+    names(proc_i) <- names(p_i)
     proc_i <- as.data.frame(do.call(rbind, proc_i))
 
     #Save results
