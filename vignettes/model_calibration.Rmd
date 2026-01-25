@@ -235,7 +235,7 @@ m_glm
 
 It is worth noting that with both maxnet and glm algorithm, some models were identified as having concave response curves. Concave (or bimodal) curves indicate that higher suitability is found at variable values around a  point of lower suitability. For example, as shown in the right panel of the figure below, higher suitability is observed in both the driest and wettest regions, with lower suitabilities occurring at intermediate precipitation levels.
 
-```{r figure of concave curves, out.width="82%", echo=FALSE, fig.align='center', fig.cap="Figure 1. Representation of convex (left) and concave (right) response curves. Dashed lines indicate limist of envrionmental conditions for model training."}
+```{r figure of concave curves, out.width="82%", echo=FALSE, fig.align='center', fig.cap="Figure 1. Representation of convex (left) and concave (right) response curves. Dashed lines indicate limits of environmental conditions for model training."}
 knitr::include_graphics("vignettes_img/concave_curves.png")
 ```
 
