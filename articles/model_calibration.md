@@ -335,11 +335,11 @@ driest and wettest regions, with lower suitabilities occurring at
 intermediate precipitation levels.
 
 ![Figure 1. Representation of convex (left) and concave (right) response
-curves. Dashed lines indicate limist of envrionmental conditions for
+curves. Dashed lines indicate limits of environmental conditions for
 model training.](vignettes_img/concave_curves.png)
 
 Figure 1. Representation of convex (left) and concave (right) response
-curves. Dashed lines indicate limist of envrionmental conditions for
+curves. Dashed lines indicate limits of environmental conditions for
 model training.
 
   
@@ -518,8 +518,8 @@ new_m_maxnet$selected_models[,c("ID", "Formulas", "R_multiplier",
 #> 159 159                        ~bio_1 + bio_7 + I(bio_1^2) + I(bio_7^2) -1
 #> 189 189 ~bio_1 + bio_7 + bio_12 + I(bio_1^2) + I(bio_7^2) + I(bio_12^2) -1
 #>     R_multiplier Omission_rate_at_5.mean Mean_AUC_ratio_at_5.mean     AICc
-#> 159          0.1                  0.0192                 1.480635 622.7677
-#> 189          0.1                  0.0192                 1.515555 621.9095
+#> 159          0.1                  0.0192                 1.476847 622.7677
+#> 189          0.1                  0.0192                 1.510434 621.9095
 #>     Is_concave
 #> 159      FALSE
 #> 189      FALSE
@@ -566,8 +566,8 @@ new_summary$selected_models[, c("ID", "Formulas", "R_multiplier",
 #> 159 159                        ~bio_1 + bio_7 + I(bio_1^2) + I(bio_7^2) -1
 #> 189 189 ~bio_1 + bio_7 + bio_12 + I(bio_1^2) + I(bio_7^2) + I(bio_12^2) -1
 #>     R_multiplier Omission_rate_at_5.mean Mean_AUC_ratio_at_5.mean     AICc
-#> 159          0.1                  0.0192                 1.480269 622.7677
-#> 189          0.1                  0.0192                 1.513495 621.9095
+#> 159          0.1                  0.0192                 1.479424 622.7677
+#> 189          0.1                  0.0192                 1.512303 621.9095
 #>     Is_concave
 #> 159      FALSE
 #> 189      FALSE
