@@ -518,8 +518,8 @@ new_m_maxnet$selected_models[,c("ID", "Formulas", "R_multiplier",
 #> 159 159                        ~bio_1 + bio_7 + I(bio_1^2) + I(bio_7^2) -1
 #> 189 189 ~bio_1 + bio_7 + bio_12 + I(bio_1^2) + I(bio_7^2) + I(bio_12^2) -1
 #>     R_multiplier Omission_rate_at_5.mean Mean_AUC_ratio_at_5.mean     AICc
-#> 159          0.1                  0.0192                 1.480066 622.7677
-#> 189          0.1                  0.0192                 1.513190 621.9095
+#> 159          0.1                  0.0192                 1.478178 622.7677
+#> 189          0.1                  0.0192                 1.510103 621.9095
 #>     Is_concave
 #> 159      FALSE
 #> 189      FALSE
@@ -566,8 +566,8 @@ new_summary$selected_models[, c("ID", "Formulas", "R_multiplier",
 #> 159 159                        ~bio_1 + bio_7 + I(bio_1^2) + I(bio_7^2) -1
 #> 189 189 ~bio_1 + bio_7 + bio_12 + I(bio_1^2) + I(bio_7^2) + I(bio_12^2) -1
 #>     R_multiplier Omission_rate_at_5.mean Mean_AUC_ratio_at_5.mean     AICc
-#> 159          0.1                  0.0192                 1.479095 622.7677
-#> 189          0.1                  0.0192                 1.510182 621.9095
+#> 159          0.1                  0.0192                 1.479866 622.7677
+#> 189          0.1                  0.0192                 1.510659 621.9095
 #>     Is_concave
 #> 159      FALSE
 #> 189      FALSE
