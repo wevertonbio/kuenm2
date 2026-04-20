@@ -32,9 +32,8 @@ from the process.
 ## Getting ready
 
 At this point it is assumed that `kuenm2` is installed (if not, see the
-[Main guide](https://marlonecobos.github.io/kuenm2/articles/index.md)).
-Load `kuenm2` and any other required packages, and define a working
-directory (if needed).
+[Main guide](https://marlonecobos.github.io/kuenm2/)). Load `kuenm2` and
+any other required packages, and define a working directory (if needed).
 
 Note: functions from other packages (i.e., not from base R or `kuenm2`)
 used in this guide will be displayed as `package::function()`.
@@ -518,8 +517,8 @@ new_m_maxnet$selected_models[,c("ID", "Formulas", "R_multiplier",
 #> 159 159                        ~bio_1 + bio_7 + I(bio_1^2) + I(bio_7^2) -1
 #> 189 189 ~bio_1 + bio_7 + bio_12 + I(bio_1^2) + I(bio_7^2) + I(bio_12^2) -1
 #>     R_multiplier Omission_rate_at_5.mean Mean_AUC_ratio_at_5.mean     AICc
-#> 159          0.1                  0.0192                 1.478910 622.7677
-#> 189          0.1                  0.0192                 1.512934 621.9095
+#> 159          0.1                  0.0192                 1.479845 622.7677
+#> 189          0.1                  0.0192                 1.512382 621.9095
 #>     Is_concave
 #> 159      FALSE
 #> 189      FALSE
@@ -566,8 +565,8 @@ new_summary$selected_models[, c("ID", "Formulas", "R_multiplier",
 #> 159 159                        ~bio_1 + bio_7 + I(bio_1^2) + I(bio_7^2) -1
 #> 189 189 ~bio_1 + bio_7 + bio_12 + I(bio_1^2) + I(bio_7^2) + I(bio_12^2) -1
 #>     R_multiplier Omission_rate_at_5.mean Mean_AUC_ratio_at_5.mean     AICc
-#> 159          0.1                  0.0192                 1.481928 622.7677
-#> 189          0.1                  0.0192                 1.511513 621.9095
+#> 159          0.1                  0.0192                 1.478674 622.7677
+#> 189          0.1                  0.0192                 1.512807 621.9095
 #>     Is_concave
 #> 159      FALSE
 #> 189      FALSE
