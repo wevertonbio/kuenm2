@@ -6,7 +6,7 @@
   [`bivariate_response()`](https://marlonecobos.github.io/kuenm2/reference/bivariate_response.md),
   store and restore graphical parameters only when plotting area is
   modified.
-- In `response_curves()`, omit graphical paramater storing and resetting
+- In `response_curves()`, omit graphical parameter storing and resetting
   to allow plotting in multipanel figures.
 - In
   [`projection_changes()`](https://marlonecobos.github.io/kuenm2/reference/projection_changes.md),
