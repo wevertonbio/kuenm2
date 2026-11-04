@@ -186,5 +186,5 @@ organize_for_projection(output_dir = out_dir,
                         overwrite = TRUE)
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/RtmpP6MX8y/Projection_variables
+#> /tmp/Rtmppe6LwH/Projection_variables
 ```
