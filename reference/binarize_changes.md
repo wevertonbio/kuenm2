@@ -114,7 +114,7 @@ organize_future_worldclim(input_dir = in_dir, output_dir = out_dir_future,
   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/Rtmpwiq5eL/Future_raw_bin
+#> /tmp/Rtmpl6ElD2/Future_raw_bin
 
 # Step 3: Prepare data to run multiple projections
 ## An example with maxnet models
@@ -140,7 +140,7 @@ p <- project_selected(models = fitted_model_maxnet, projection_data = pr,
                       out_dir = out_dir)
 #> 
   |                                                  | 0 % ~calculating  
-  |+++++++++++++++++                                 | 33% ~00s          
+  |+++++++++++++++++                                 | 33% ~01s          
   |++++++++++++++++++++++++++++++++++                | 67% ~00s          
   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=01s  
 

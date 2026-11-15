@@ -227,7 +227,7 @@ organize_future_worldclim(input_dir = in_dir, output_dir = out_dir_future,
   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/Rtmpwiq5eL/Future_raw4
+#> /tmp/Rtmpl6ElD2/Future_raw4
 
 # Step 3: Prepare data to run multiple projections
 ## An example with maxnet models
@@ -254,12 +254,12 @@ kmop <- projection_mop(data = fitted_model_maxnet, projection_data = pr,
 #> 
   |                                                  | 0 % ~calculating  
   |++++++                                            | 11% ~02s          
-  |++++++++++++                                      | 22% ~01s          
+  |++++++++++++                                      | 22% ~02s          
   |+++++++++++++++++                                 | 33% ~01s          
   |+++++++++++++++++++++++                           | 44% ~01s          
   |++++++++++++++++++++++++++++                      | 56% ~01s          
-  |++++++++++++++++++++++++++++++++++                | 67% ~00s          
+  |++++++++++++++++++++++++++++++++++                | 67% ~01s          
   |+++++++++++++++++++++++++++++++++++++++           | 78% ~00s          
   |+++++++++++++++++++++++++++++++++++++++++++++     | 89% ~00s          
-  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=01s  
+  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=02s  
 ```

@@ -158,7 +158,7 @@ organize_future_worldclim(input_dir = in_dir, output_dir = out_dir_future,
   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/Rtmpwiq5eL/Future_raw2
+#> /tmp/Rtmpl6ElD2/Future_raw2
 
 # Step 3: Prepare data to run multiple projections
 ## An example with maxnet models
@@ -186,9 +186,9 @@ p <- project_selected(models = fitted_model_maxnet, projection_data = pr,
   |                                                  | 0 % ~calculating  
   |++++++++++                                        | 20% ~01s          
   |++++++++++++++++++++                              | 40% ~01s          
-  |++++++++++++++++++++++++++++++                    | 60% ~00s          
+  |++++++++++++++++++++++++++++++                    | 60% ~01s          
   |++++++++++++++++++++++++++++++++++++++++          | 80% ~00s          
-  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=01s  
+  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=02s  
 
 # Use import_results to import results:
 raster_p <- import_results(projection = p, consensus = "mean")
