@@ -7,7 +7,8 @@ Variable importance
 ``` r
 variable_importance(models, modelID = NULL, by_terms = FALSE,
                     parallel = FALSE, ncores = NULL,
-                    progress_bar = TRUE, verbose = TRUE)
+                    progress_bar = TRUE, progress_type = "timer",
+                    use_lb = FALSE, verbose = TRUE)
 ```
 
 ## Arguments
@@ -44,6 +45,18 @@ variable_importance(models, modelID = NULL, by_terms = FALSE,
   (logical) whether to display a progress bar during processing. Default
   is TRUE.
 
+- progress_type:
+
+  (character) type of the progress bar. See
+  [`pbapply::pbtypes()`](https://peter.solymos.org/pbapply/reference/pboptions.html)
+  for available progress bar types depending on operating system.
+  Default is "timer".
+
+- use_lb:
+
+  (logical) whether to use load balancing when running in parallel.
+  Default is FALSE.
+
 - verbose:
 
   (logical) whether to display detailed messages during processing.
@@ -70,10 +83,19 @@ data(fitted_model_maxnet, package = "kuenm2")
 imp_maxnet <- variable_importance(models = fitted_model_maxnet)
 #> 
 #> Calculating variable contribution for model 1 of 2
-#>   |                                                                              |                                                                      |   0%  |                                                                              |=======================                                               |  33%  |                                                                              |===============================================                       |  67%  |                                                                              |======================================================================| 100%
+#> 
+  |                                                  | 0 % ~calculating  
+  |+++++++++++++++++                                 | 33% ~00s          
+  |++++++++++++++++++++++++++++++++++                | 67% ~00s          
+  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
 #> 
 #> Calculating variable contribution for model 2 of 2
-#>   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%
+#> 
+  |                                                  | 0 % ~calculating  
+  |+++++++++++++                                     | 25% ~00s          
+  |+++++++++++++++++++++++++                         | 50% ~00s          
+  |++++++++++++++++++++++++++++++++++++++            | 75% ~00s          
+  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
 
 # Plot
 plot_importance(imp_maxnet)
@@ -87,7 +109,11 @@ data(fitted_model_glm, package = "kuenm2")
 imp_glm <- variable_importance(models = fitted_model_glm)
 #> 
 #> Calculating variable contribution for model 1 of 1
-#>   |                                                                              |                                                                      |   0%  |                                                                              |=======================                                               |  33%  |                                                                              |===============================================                       |  67%  |                                                                              |======================================================================| 100%
+#> 
+  |                                                  | 0 % ~calculating  
+  |+++++++++++++++++                                 | 33% ~00s          
+  |++++++++++++++++++++++++++++++++++                | 67% ~00s          
+  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
 
 # Plot
 plot_importance(imp_glm)

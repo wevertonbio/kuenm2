@@ -16,7 +16,8 @@ project_selected(models, projection_data, out_dir, mask = NULL,
                  write_replicates = FALSE, extrapolation_type = "E",
                  var_to_restrict = NULL, type = NULL, overwrite = FALSE,
                  parallel = FALSE, ncores = NULL,
-                 progress_bar = TRUE, verbose = TRUE)
+                 progress_bar = TRUE, progress_type = "timer",
+                 use_lb = FALSE, verbose = TRUE)
 ```
 
 ## Arguments
@@ -108,6 +109,18 @@ project_selected(models, projection_data, out_dir, mask = NULL,
   (logical) whether to display a progress bar during processing. Default
   is TRUE.
 
+- progress_type:
+
+  (character) type of the progress bar. See
+  [`pbapply::pbtypes()`](https://peter.solymos.org/pbapply/reference/pboptions.html)
+  for available progress bar types depending on operating system.
+  Default is "timer".
+
+- use_lb:
+
+  (logical) whether to use load balancing when running in parallel.
+  Default is FALSE.
+
 - verbose:
 
   (logical) whether to display messages during processing. Default is
@@ -151,10 +164,28 @@ out_dir_future <- file.path(tempdir(), "Future_raw_wc")
 ### 'SoilType' will be appended as a static variable in each scenario
 organize_future_worldclim(input_dir = in_dir, output_dir = out_dir_future,
                           name_format = "bio_", static_variables = var$SoilType)
-#>   |                                                                              |                                                                      |   0%  |                                                                              |=========                                                             |  12%  |                                                                              |==================                                                    |  25%  |                                                                              |==========================                                            |  38%  |                                                                              |===================================                                   |  50%  |                                                                              |============================================                          |  62%  |                                                                              |====================================================                  |  75%  |                                                                              |=============================================================         |  88%  |                                                                              |======================================================================| 100%
+#> 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |=========                                                             |  12%
+  |                                                                            
+  |==================                                                    |  25%
+  |                                                                            
+  |==========================                                            |  38%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |============================================                          |  62%
+  |                                                                            
+  |====================================================                  |  75%
+  |                                                                            
+  |=============================================================         |  88%
+  |                                                                            
+  |======================================================================| 100%
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/Rtmp8Lb3XA/Future_raw_wc
+#> /tmp/RtmpQHI2CE/Future_raw_wc
 
 # Step 3: Prepare data to run multiple projections
 ## An example with maxnet models
@@ -178,5 +209,11 @@ dir.create(out_dir, recursive = TRUE)
 ## Project selected models to multiple scenarios
 p <- project_selected(models = fitted_model_maxnet, projection_data = pr,
                       out_dir = out_dir)
-#>   |                                                                              |                                                                      |   0%  |                                                                              |==============                                                        |  20%  |                                                                              |============================                                          |  40%  |                                                                              |==========================================                            |  60%  |                                                                              |========================================================              |  80%  |                                                                              |======================================================================| 100%
+#> 
+  |                                                  | 0 % ~calculating  
+  |++++++++++                                        | 20% ~02s          
+  |++++++++++++++++++++                              | 40% ~02s          
+  |++++++++++++++++++++++++++++++                    | 60% ~01s          
+  |++++++++++++++++++++++++++++++++++++++++          | 80% ~00s          
+  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=03s  
 ```

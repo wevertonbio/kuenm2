@@ -196,10 +196,28 @@ out_dir_future <- file.path(tempdir(), "Future_raw3")
 ### 'SoilType' will be appended as a static variable in each scenario
 organize_future_worldclim(input_dir = in_dir, output_dir = out_dir_future,
                           name_format = "bio_", static_variables = var$SoilType)
-#>   |                                                                              |                                                                      |   0%  |                                                                              |=========                                                             |  12%  |                                                                              |==================                                                    |  25%  |                                                                              |==========================                                            |  38%  |                                                                              |===================================                                   |  50%  |                                                                              |============================================                          |  62%  |                                                                              |====================================================                  |  75%  |                                                                              |=============================================================         |  88%  |                                                                              |======================================================================| 100%
+#> 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |=========                                                             |  12%
+  |                                                                            
+  |==================                                                    |  25%
+  |                                                                            
+  |==========================                                            |  38%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |============================================                          |  62%
+  |                                                                            
+  |====================================================                  |  75%
+  |                                                                            
+  |=============================================================         |  88%
+  |                                                                            
+  |======================================================================| 100%
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/Rtmp8Lb3XA/Future_raw3
+#> /tmp/RtmpQHI2CE/Future_raw3
 
 # Step 3: Prepare data to run multiple projections
 ## An example with maxnet models
@@ -223,7 +241,11 @@ dir.create(out_dir, recursive = TRUE)
 ## Project selected models to multiple scenarios
 p <- project_selected(models = fitted_model_maxnet, projection_data = pr,
                       out_dir = out_dir)
-#>   |                                                                              |                                                                      |   0%  |                                                                              |=======================                                               |  33%  |                                                                              |===============================================                       |  67%  |                                                                              |======================================================================| 100%
+#> 
+  |                                                  | 0 % ~calculating  
+  |+++++++++++++++++                                 | 33% ~01s          
+  |++++++++++++++++++++++++++++++++++                | 67% ~01s          
+  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=02s  
 
 # Step 5: Identify areas of change in projections
 ## Contraction, expansion and stability
