@@ -197,27 +197,18 @@ out_dir_future <- file.path(tempdir(), "Future_raw3")
 organize_future_worldclim(input_dir = in_dir, output_dir = out_dir_future,
                           name_format = "bio_", static_variables = var$SoilType)
 #> 
-  |                                                                            
-  |                                                                      |   0%
-  |                                                                            
-  |=========                                                             |  12%
-  |                                                                            
-  |==================                                                    |  25%
-  |                                                                            
-  |==========================                                            |  38%
-  |                                                                            
-  |===================================                                   |  50%
-  |                                                                            
-  |============================================                          |  62%
-  |                                                                            
-  |====================================================                  |  75%
-  |                                                                            
-  |=============================================================         |  88%
-  |                                                                            
-  |======================================================================| 100%
+  |                                                  | 0 % ~calculating  
+  |+++++++                                           | 12% ~00s          
+  |+++++++++++++                                     | 25% ~00s          
+  |+++++++++++++++++++                               | 38% ~00s          
+  |+++++++++++++++++++++++++                         | 50% ~00s          
+  |++++++++++++++++++++++++++++++++                  | 62% ~00s          
+  |++++++++++++++++++++++++++++++++++++++            | 75% ~00s          
+  |++++++++++++++++++++++++++++++++++++++++++++      | 88% ~00s          
+  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/RtmpfbqUNp/Future_raw3
+#> /tmp/RtmpcejdJn/Future_raw3
 
 # Step 3: Prepare data to run multiple projections
 ## An example with maxnet models
@@ -243,9 +234,9 @@ p <- project_selected(models = fitted_model_maxnet, projection_data = pr,
                       out_dir = out_dir)
 #> 
   |                                                  | 0 % ~calculating  
-  |+++++++++++++++++                                 | 33% ~01s          
-  |++++++++++++++++++++++++++++++++++                | 67% ~01s          
-  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=02s  
+  |+++++++++++++++++                                 | 33% ~00s          
+  |++++++++++++++++++++++++++++++++++                | 67% ~00s          
+  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=01s  
 
 # Step 5: Identify areas of change in projections
 ## Contraction, expansion and stability
