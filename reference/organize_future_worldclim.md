@@ -137,7 +137,7 @@ organize_future_worldclim(input_dir = in_dir, output_dir = out_dir,
   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/RtmpRCx4FC/Future_raw
+#> /tmp/Rtmpwiq5eL/Future_raw
 
 # Check files organized
 dir(out_dir, recursive = TRUE)
