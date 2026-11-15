@@ -164,7 +164,7 @@ organize_future_worldclim(input_dir = in_dir,
   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/RtmpcejdJn/Future_raw
+#> /tmp/RtmpRCx4FC/Future_raw
 
 # Prepare projections using fitted models to check variables
 pr <- prepare_projection(models = fitted_model_maxnet,
@@ -188,7 +188,7 @@ pr
 #>   - Scenarios: ssp126 | ssp585 
 #>   - GCMs: ACCESS-CM2 | MIROC6 
 #> All variables are located in the following root directory:
-#> /tmp/RtmpcejdJn
+#> /tmp/RtmpRCx4FC
 
 # Prepare projections using variables names
 pr_b <- prepare_projection(models = NULL,
@@ -213,5 +213,5 @@ pr_b
 #>   - Scenarios: ssp126 | ssp585 
 #>   - GCMs: ACCESS-CM2 | MIROC6 
 #> All variables are located in the following root directory:
-#> /tmp/RtmpcejdJn
+#> /tmp/RtmpRCx4FC
 ```
