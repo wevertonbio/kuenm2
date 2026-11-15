@@ -180,7 +180,7 @@ organize_future_worldclim(input_dir = in_dir, output_dir = out_dir_future,
   |======================================================================| 100%
 #> 
 #> Variables successfully organized in directory:
-#> /tmp/RtmpQHI2CE/Future_raw1
+#> /tmp/RtmpfbqUNp/Future_raw1
 
 # Prepare projections
 pr <- prepare_projection(variable_names = c("bio_1", "bio_7", "bio_12",
@@ -201,5 +201,5 @@ proj_pca <- perform_pca(raster_variables = var, exclude_from_pca = "SoilType",
                         out_dir = out_dir, center = TRUE, scale = TRUE)
 
 proj_pca$projection_directory  # Directory with projected PCA-variables
-#> [1] "/tmp/RtmpQHI2CE/PCA_projections"
+#> [1] "/tmp/RtmpfbqUNp/PCA_projections"
 ```
